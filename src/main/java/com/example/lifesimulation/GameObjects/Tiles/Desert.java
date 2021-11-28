@@ -1,8 +1,10 @@
 package com.example.lifesimulation.GameObjects.Tiles;
 
-public class Desert extends Tile {
+import java.util.Collections;
+
+public class Desert extends SolidTile {
     public Desert() {
         super();
-        tileType = TileType.DESERT;
+        tileType = Collections.singleton(Desert.class);
     }
 }

@@ -11,6 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="LifeSimulation OOP Project" target="11" />
+      <module name="wrapper" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

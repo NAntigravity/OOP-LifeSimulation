@@ -1,5 +1,5 @@
 package com.example.lifesimulation.GameObjects.Animals;
 
-public class Pterodactyl {
+public class Pterodactyl extends Animal {
 
 }

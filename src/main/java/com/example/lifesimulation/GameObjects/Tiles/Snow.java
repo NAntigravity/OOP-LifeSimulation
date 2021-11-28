@@ -1,7 +1,7 @@
 package com.example.lifesimulation.GameObjects.Tiles;
 
-public class Ice extends LiquidTile {
-    public Ice() {
+public class Snow extends SolidTile {
+    public Snow() {
         super();
     }
 }

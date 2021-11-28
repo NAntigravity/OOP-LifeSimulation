@@ -1,0 +1,37 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+.row {
+    flex-wrap: nowrap;
+}
+.sidebar {
+    display: flex;
+    background-color: #beada1;
+    left: 0;
+    height: 100%;
+    min-width: 300px;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 0;
+}
+
+content {
+    display: flex;
+    flex: 0 1 0;
+    justify-content: space-between;
+}
+
+.text {
+    justify-content: right;
+    display: flex;
+    flex-direction: column;
+    padding: 90px;
+    font-family: "Courier New", serif;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 1.3em;
+    color: #38282d;
+}

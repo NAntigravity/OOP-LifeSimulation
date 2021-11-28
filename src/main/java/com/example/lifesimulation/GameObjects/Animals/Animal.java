@@ -1,17 +1,29 @@
 package com.example.lifesimulation.GameObjects.Animals;
 
 import com.example.lifesimulation.GameObjects.Entity;
-import com.example.lifesimulation.GameObjects.EntityType;
+import com.example.lifesimulation.GameObjects.Nature.Healing;
+import com.example.lifesimulation.GameObjects.Nature.Poisoning;
+import com.example.lifesimulation.GameObjects.SeasonDependent;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
-public class Animal extends Entity {
-    protected Set<EntityType> eatableEntities;
+public class Animal extends Entity implements SeasonDependent {
+    protected Set<Class> eatableEntities;
 
     public Animal() {
         super();
-        entityType = EntityType.ANIMAL;
-        eatableEntities = new TreeSet<>(List.of(EntityType.ANIMAL));
+        entityType = Animal.class;
+        eatableEntities = new TreeSet<>(List.of(Animal.class));
+    }
 
+    public boolean increaseOrrDecreaseHealth(Object object) {
+        if (object instanceof Healing) {
+            return false;
+        } else if (object instanceof Poisoning) {
+            return true;
+        }
+        return true;
     }
 }

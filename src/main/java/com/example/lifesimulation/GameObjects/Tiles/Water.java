@@ -1,8 +1,11 @@
 package com.example.lifesimulation.GameObjects.Tiles;
 
-public class Water extends Tile {
+import java.util.Collections;
+
+public class Water extends LiquidTile {
     public Water() {
         super();
-        tileType = TileType.WATER;
+        tileType = Collections.singleton(Water.class);
     }
+
 }
