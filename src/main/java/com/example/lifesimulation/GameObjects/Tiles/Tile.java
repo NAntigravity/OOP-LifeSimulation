@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Tile implements Serializable, SeasonDependent {
+public abstract class Tile implements Serializable, SeasonDependent {
     protected Set<Class> tileType;
     public Tile() {
         super();

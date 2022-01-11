@@ -7,15 +7,18 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="LifeSimulation OOP Project" />
+        <module name="LifeSimulation" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="LifeSimulation" target="11" />
       <module name="LifeSimulation OOP Project" target="11" />
       <module name="wrapper" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="LifeSimulation" options="-parameters" />
       <module name="LifeSimulation OOP Project" options="-parameters" />
     </option>
   </component>

@@ -1,5 +1,5 @@
-function switchImageByID(tile, ID){
-    switch (ID){
+function switchImageByID(tile, ID) {
+    switch (ID) {
         case "com.example.lifesimulation.GameObjects.Tiles.Desert":
             tile.setAttribute('src', 'img/tiles/desert.jpg');
             break;
@@ -16,22 +16,22 @@ function switchImageByID(tile, ID){
             tile.setAttribute('src', 'img/tiles/ice.png');
             break;
     }
-    console.log(ID);
 }
 
 let tiles;
 let w;
 let h;
-
+let map;
+let prevEntities = null;
 async function mapCreation() {
     let response = await fetch('http://localhost:8080/LifeSimulation');
     let json = await response.json();
 
-    w = json.width;
-    h = json.height;
-    tiles = json.tiles;
+    w = json.map.width;
+    h = json.map.height;
+    tiles = json.map.tiles;
 
-    let map = document.getElementById("gameField");
+    map = document.getElementById("gameField");
 
     for (let i = 0; i < h; i++) {
         let col = document.createElement("div");
@@ -49,49 +49,40 @@ async function mapCreation() {
     }
 }
 
-function switchEntityByID(creation, entity){
+function switchEntityByID(creation, entity) {
     let ID = entity.entityType;
-    switch (ID){
-        case "com.example.lifesimulation.GameObjects.Animals.Diplodocus":
-            creation.setAttribute('src', 'img/tiles/desert.jpg');
+    switch (ID) {
+        case "com.example.lifesimulation.GameObjects.Animals.Turtle":
+            creation.setAttribute('src', 'img/animals/turtle.png');
             break;
-        case "com.example.lifesimulation.GameObjects.Animals.Human":
-            creation.setAttribute('src', 'img/tiles/water.png');
-            break;
-        case "com.example.lifesimulation.GameObjects.Animals.Pterodactyl":
-            creation.setAttribute('src', 'img/tiles/earth.jpg');
-            break;
-        case "com.example.lifesimulation.GameObjects.Animals.Stegosaurus":
-            creation.setAttribute('src', 'img/animals/steg.png');
-            break;
-        case "com.example.lifesimulation.GameObjects.Animals.Triceratops":
-            creation.setAttribute('src', 'img/tiles/ice.png');
-            break;
-        case "com.example.lifesimulation.GameObjects.Animals.Tyrannosaurus":
-            creation.setAttribute('src', 'img/animals/tyrex.png');
-            break;
-        case "com.example.lifesimulation.GameObjects.Plants.IceHerb":
-            creation.setAttribute('src', 'img/plants/tyrex.png');
-            break;
-        case "com.example.lifesimulation.GameObjects.Plants.Lotus":
-            creation.setAttribute('src', 'img/plants/tyrex.png');
-            break;
-        case "com.example.lifesimulation.GameObjects.Plants.Mushroom":
-            creation.setAttribute('src', 'img/plants/mushroom.png');
-            break;
-        case "com.example.lifesimulation.GameObjects.Plants.Nut":
-            creation.setAttribute('src', 'img/plants/mushroom.png');
-            break;
-        case "com.example.lifesimulation.GameObjects.Plants.Seaweed":
-            creation.setAttribute('src', 'img/plants/mushroom.png');
-            break;
-        case "com.example.lifesimulation.GameObjects.Plants.Thistle":
-            creation.setAttribute('src', 'img/plants/mushroom.png');
-            break;
-        case "com.example.lifesimulation.GameObjects.Plants.СarnivorousPlant":
-            creation.setAttribute('src', 'img/plants/mushroom.png');
+        case "com.example.lifesimulation.GameObjects.Animals.Ship":
+            creation.setAttribute('src', 'img/animals/ship.png');
             break;
     }
 }
 
+async function updateEntity() {
+    let response = await fetch('http://localhost:8080/LifeSimulation');
+    let entities = await response.json();
+    let node;
+    if(prevEntities != null) {
+        for (let oldEntity of prevEntities) {
+            var tileType = entities.map.tiles[oldEntity.y][oldEntity.x].tileType[0];
+            var oldNode = map.childNodes[oldEntity.y].childNodes[oldEntity.x]
+            switchImageByID(oldNode, tileType);
+        }
+    }
+    for (let unit of entities.entities) {
+        try {
+            node = map.childNodes[unit.y].childNodes[unit.x];
+        } catch (e) {
+            console.log(e.message);
+        }
+        if (node == undefined) continue;
+        switchEntityByID(node, unit);
+    }
+    prevEntities = entities.entities;
+}
+
 mapCreation();
+setInterval(updateEntity, 1000);

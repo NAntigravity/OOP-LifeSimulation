@@ -1,6 +1,10 @@
 package com.example.lifesimulation.GameObjects;
 
-import com.example.lifesimulation.GameObjects.Tiles.*;
+import com.example.lifesimulation.GameObjects.Tiles.Desert;
+import com.example.lifesimulation.GameObjects.Tiles.LiquidTile;
+import com.example.lifesimulation.GameObjects.Tiles.SolidTile;
+import com.example.lifesimulation.GameObjects.Tiles.Tile;
+import com.example.lifesimulation.GameObjects.Tiles.Water;
 
 import java.io.Serializable;
 import java.util.Vector;
@@ -59,5 +63,4 @@ public class Map implements Serializable {
     public Integer getTemperature() {
         return temperature;
     }
-
 }

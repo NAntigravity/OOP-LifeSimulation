@@ -1,29 +1,49 @@
 package com.example.lifesimulation.GameObjects.Animals;
 
 import com.example.lifesimulation.GameObjects.Entity;
-import com.example.lifesimulation.GameObjects.Nature.Healing;
-import com.example.lifesimulation.GameObjects.Nature.Poisoning;
+import com.example.lifesimulation.GameObjects.Map;
 import com.example.lifesimulation.GameObjects.SeasonDependent;
 
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.Vector;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class Animal extends Entity implements SeasonDependent {
-    protected Set<Class> eatableEntities;
+public abstract class Animal extends Entity implements SeasonDependent {
+    //protected TreeSet<Entity> eatableEntities;
 
     public Animal() {
         super();
         entityType = Animal.class;
-        eatableEntities = new TreeSet<>(List.of(Animal.class));
+        //eatableEntities = new TreeSet<>(List.of(this));
     }
 
-    public boolean increaseOrrDecreaseHealth(Object object) {
-        if (object instanceof Healing) {
-            return false;
-        } else if (object instanceof Poisoning) {
-            return true;
+    public void live(Map map, Vector<Entity> entities) {
+        moveToRandomDirection(map);
+    }
+
+    protected void moveToRandomDirection(Map map) {
+        int direction = ThreadLocalRandom.current().nextInt(1, 5);
+        int tempX = x;
+        int tempY = y;
+
+        switch (direction) {
+            case 1:
+                tempX += 1;
+                break;
+            case 2:
+                tempX -= 1;
+                break;
+            case 3:
+                tempY += 1;
+                break;
+            case 4:
+                tempY -= 1;
+                break;
         }
-        return true;
+
+        if (tempX >= 0 && tempX < map.getWidth()
+                && tempY >= 0 && tempY < map.getHeight()) {
+                x = tempX;
+                y = tempY;
+        }
     }
 }
