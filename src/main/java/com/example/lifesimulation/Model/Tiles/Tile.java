@@ -1,6 +1,6 @@
-package com.example.lifesimulation.GameObjects.Tiles;
+package com.example.lifesimulation.Model.Tiles;
 
-import com.example.lifesimulation.GameObjects.SeasonDependent;
+import com.example.lifesimulation.Model.SeasonDependent;
 
 import java.io.Serializable;
 import java.util.Collections;

@@ -1,7 +1,7 @@
-package com.example.lifesimulation.GameObjects;
+package com.example.lifesimulation.Model;
 
-import com.example.lifesimulation.GameObjects.Animals.Ship;
-import com.example.lifesimulation.GameObjects.Animals.Turtle;
+import com.example.lifesimulation.Model.Animals.Ship;
+import com.example.lifesimulation.Model.Animals.Turtle;
 
 import java.io.Serializable;
 import java.util.Vector;
@@ -17,7 +17,8 @@ public class ControlClass implements Serializable {
         entities = new Vector<>();
         run();
     }
-    public static ControlClass getInstance(){
+
+    public static ControlClass getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new ControlClass();
         }
@@ -37,6 +38,7 @@ public class ControlClass implements Serializable {
             spawnRandomUnit();
         }
     }
+
     public void LiveOneTick() {
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).live(gameField, entities);

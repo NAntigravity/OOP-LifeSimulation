@@ -1,8 +1,8 @@
-package com.example.lifesimulation.GameObjects.Animals;
+package com.example.lifesimulation.Model.Animals;
 
-import com.example.lifesimulation.GameObjects.Entity;
-import com.example.lifesimulation.GameObjects.Map;
-import com.example.lifesimulation.GameObjects.SeasonDependent;
+import com.example.lifesimulation.Model.Entity;
+import com.example.lifesimulation.Model.Map;
+import com.example.lifesimulation.Model.SeasonDependent;
 
 import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;

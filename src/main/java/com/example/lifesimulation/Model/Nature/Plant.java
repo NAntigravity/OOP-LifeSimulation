@@ -1,8 +1,8 @@
-package com.example.lifesimulation.GameObjects.Nature;
+package com.example.lifesimulation.Model.Nature;
 
-import com.example.lifesimulation.GameObjects.Entity;
-import com.example.lifesimulation.GameObjects.SeasonDependent;
-import com.example.lifesimulation.GameObjects.Tiles.Tile;
+import com.example.lifesimulation.Model.Entity;
+import com.example.lifesimulation.Model.SeasonDependent;
+import com.example.lifesimulation.Model.Tiles.Tile;
 
 import java.util.TreeSet;
 

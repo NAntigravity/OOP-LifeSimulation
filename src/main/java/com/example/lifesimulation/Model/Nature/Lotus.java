@@ -1,4 +1,4 @@
-package com.example.lifesimulation.GameObjects.Nature;
+package com.example.lifesimulation.Model.Nature;
 
 public class Lotus extends Plant {
     public Lotus() {

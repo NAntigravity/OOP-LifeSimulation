@@ -1,4 +1,4 @@
-package com.example.lifesimulation.GameObjects.Nature;
+package com.example.lifesimulation.Model.Nature;
 
 public class Mushroom extends Plant implements Healing {
     public Mushroom() {

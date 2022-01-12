@@ -1,4 +1,4 @@
-package com.example.lifesimulation.GameObjects.Tiles;
+package com.example.lifesimulation.Model.Tiles;
 
 import java.util.HashSet;
 import java.util.List;

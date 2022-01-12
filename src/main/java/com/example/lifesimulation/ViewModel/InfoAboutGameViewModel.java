@@ -1,7 +1,7 @@
 package com.example.lifesimulation.ViewModel;
 
-import com.example.lifesimulation.GameObjects.Entity;
-import com.example.lifesimulation.GameObjects.Map;
+import com.example.lifesimulation.Model.Entity;
+import com.example.lifesimulation.Model.Map;
 
 import java.util.Vector;
 

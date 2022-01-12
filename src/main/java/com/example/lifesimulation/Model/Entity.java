@@ -1,4 +1,4 @@
-package com.example.lifesimulation.GameObjects;
+package com.example.lifesimulation.Model;
 
 import java.io.Serializable;
 import java.util.Vector;

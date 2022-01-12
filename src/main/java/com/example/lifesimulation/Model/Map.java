@@ -1,10 +1,10 @@
-package com.example.lifesimulation.GameObjects;
+package com.example.lifesimulation.Model;
 
-import com.example.lifesimulation.GameObjects.Tiles.Desert;
-import com.example.lifesimulation.GameObjects.Tiles.LiquidTile;
-import com.example.lifesimulation.GameObjects.Tiles.SolidTile;
-import com.example.lifesimulation.GameObjects.Tiles.Tile;
-import com.example.lifesimulation.GameObjects.Tiles.Water;
+import com.example.lifesimulation.Model.Tiles.Desert;
+import com.example.lifesimulation.Model.Tiles.LiquidTile;
+import com.example.lifesimulation.Model.Tiles.SolidTile;
+import com.example.lifesimulation.Model.Tiles.Tile;
+import com.example.lifesimulation.Model.Tiles.Water;
 
 import java.io.Serializable;
 import java.util.Vector;

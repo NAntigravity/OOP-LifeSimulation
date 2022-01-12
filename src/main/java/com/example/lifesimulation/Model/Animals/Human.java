@@ -1,4 +1,4 @@
-package com.example.lifesimulation.GameObjects.Animals;
+package com.example.lifesimulation.Model.Animals;
 
 public class Human extends Animal {
     public Human() {

@@ -1,4 +1,4 @@
-package com.example.lifesimulation.GameObjects.Tiles;
+package com.example.lifesimulation.Model.Tiles;
 
 import java.util.Collections;
 

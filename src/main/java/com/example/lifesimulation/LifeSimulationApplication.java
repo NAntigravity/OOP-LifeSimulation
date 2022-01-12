@@ -1,6 +1,6 @@
 package com.example.lifesimulation;
 
-import com.example.lifesimulation.GameObjects.ControlClass;
+import com.example.lifesimulation.Model.ControlClass;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -10,7 +10,9 @@ public class LifeSimulationApplication {
     public static void main(String[] args) {
         var contextForLifeSimulation = new AnnotationConfigApplicationContext(LifeSimulationConfiguration.class);
         var game = contextForLifeSimulation.getBean(ControlClass.class);
+
         SpringApplication.run(LifeSimulationApplication.class, args);
+
         while (true) {
             game.LiveOneTick();
             try {
