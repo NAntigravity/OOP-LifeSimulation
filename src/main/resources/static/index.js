@@ -1,18 +1,18 @@
 function switchImageByID(tile, ID) {
     switch (ID) {
-        case "com.example.lifesimulation.Model.Tiles.Desert":
+        case "com.example.lifesimulation.Game.Tiles.Desert":
             tile.setAttribute('src', 'img/tiles/desert.jpg');
             break;
-        case "com.example.lifesimulation.Model.Tiles.Water":
+        case "com.example.lifesimulation.Game.Tiles.Water":
             tile.setAttribute('src', 'img/tiles/water.png');
             break;
-        case "com.example.lifesimulation.Model.Tiles.Earth":
+        case "com.example.lifesimulation.Game.Tiles.Earth":
             tile.setAttribute('src', 'img/tiles/earth.jpg');
             break;
-        case "com.example.lifesimulation.Model.Tiles.Snow":
+        case "com.example.lifesimulation.Game.Tiles.Snow":
             tile.setAttribute('src', 'img/tiles/snow.jpg');
             break;
-        case "com.example.lifesimulation.Model.Tiles.Ice":
+        case "com.example.lifesimulation.Game.Tiles.Ice":
             tile.setAttribute('src', 'img/tiles/ice.png');
             break;
     }
@@ -53,10 +53,10 @@ async function mapCreation() {
 function switchEntityByID(creation, entity) {
     let ID = entity.entityType;
     switch (ID) {
-        case "com.example.lifesimulation.Model.Animals.Turtle":
+        case "com.example.lifesimulation.Game.Animals.Turtle":
             creation.setAttribute('src', 'img/animals/turtle.png');
             break;
-        case "com.example.lifesimulation.Model.Animals.Ship":
+        case "com.example.lifesimulation.Game.Animals.Ship":
             creation.setAttribute('src', 'img/animals/ship.png');
             break;
     }

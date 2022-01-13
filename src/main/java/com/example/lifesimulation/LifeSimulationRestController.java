@@ -1,7 +1,6 @@
 package com.example.lifesimulation;
 
-import com.example.lifesimulation.Model.ControlClass;
-import com.example.lifesimulation.ViewModel.InfoAboutGameViewModel;
+import com.example.lifesimulation.Game.ControlClass;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -22,11 +21,11 @@ public class LifeSimulationRestController {
         game = contextForLifeSimulation.getBean(ControlClass.class);
     }
 
-    public String Info() throws JsonProcessingException {
+    private String Info() throws JsonProcessingException {
         ObjectMapper serialization = new ObjectMapper();
         var map = game.getMap();
         var entities = game.getEntities();
-        return serialization.writeValueAsString(new InfoAboutGameViewModel(map, entities));
+        return serialization.writeValueAsString(new LifeSimulationViewModel(map, entities));
     }
 
     @GetMapping("/LifeSimulation")

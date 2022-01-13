@@ -1,6 +1,6 @@
 package com.example.lifesimulation;
 
-import com.example.lifesimulation.Model.ControlClass;
+import com.example.lifesimulation.Game.ControlClass;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

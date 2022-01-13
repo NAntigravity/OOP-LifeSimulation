@@ -1,6 +1,6 @@
 package com.example.lifesimulation;
 
-import com.example.lifesimulation.Model.ControlClass;
+import com.example.lifesimulation.Game.ControlClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
