@@ -4,7 +4,6 @@ import com.example.lifesimulation.Game.Animals.Animal;
 import com.example.lifesimulation.Game.Animals.Sex;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;

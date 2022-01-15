@@ -43,7 +43,8 @@ public class ControlClass implements Serializable {
                     Grass.class,
                     WaterLily.class,
                     Wolf.class,
-                    HumanMale.class
+                    HumanMale.class,
+                    HumanFemale.class
 
             ));
             int spawnEntityNumber = (int) (Math.random() * entityNameCollection.size());

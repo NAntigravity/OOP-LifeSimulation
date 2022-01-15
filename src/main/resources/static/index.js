@@ -59,6 +59,9 @@ function switchEntityByID(creation, entity) {
         case "com.example.lifesimulation.Game.Animals.HumanMale":
             creation.setAttribute('src', 'img/animals/human.jpg');
             break;
+        case "com.example.lifesimulation.Game.Animals.HumanFemale":
+            creation.setAttribute('src', 'img/animals/humanFemale.png');
+            break;
         case "com.example.lifesimulation.Game.Animals.Wolf":
             creation.setAttribute('src', 'img/animals/wolf.jpg');
             break;
