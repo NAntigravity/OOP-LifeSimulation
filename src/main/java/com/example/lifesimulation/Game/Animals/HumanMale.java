@@ -25,7 +25,8 @@ public class HumanMale extends Human {
             if (entity.getEntityType() == House.class) {
                 var distance = Math.sqrt(Math.pow(x - entity.getX(), 2) + Math.pow(y - entity.getY(), 2));
                 if (distance <= searchRadius) {
-                    return entityControlService.findNearestEmptyCoordinate(entity.getX(), entity.getY(), map, suitableTile);
+                    var nearestCoord = entityControlService.findNearestEmptyCoordinate(entity.getX(), entity.getY(), map, suitableTile);
+                    return nearestCoord == null ? new Coordinate(x,y) : nearestCoord;
                 }
             }
         }
@@ -42,6 +43,7 @@ public class HumanMale extends Human {
                     var house = new House(houseCoordinate.x, houseCoordinate.y);
                     house.setVillage(((House) entity).getVillage());
                     entityControlService.spawnEntityOnCoordinates(house, x, y);
+                    setHouse(house);
                     return;
                 }
             }
@@ -49,6 +51,7 @@ public class HumanMale extends Human {
         var house = new House(x, y);
         house.setVillage(new Village());
         entityControlService.spawnEntityOnCoordinates(house, x, y);
+        setHouse(house);
     }
 
     @Override

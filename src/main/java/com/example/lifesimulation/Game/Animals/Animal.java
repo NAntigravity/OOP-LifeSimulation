@@ -16,6 +16,7 @@ public abstract class Animal extends Entity implements IsViable {
     protected Integer foodSearchArea;
     protected Integer speed;
     protected Integer reproductionTime;
+    protected Integer reproductionCooldown;
     protected Sex sex;
     protected Integer foodSearchThreshold;
 
@@ -26,22 +27,26 @@ public abstract class Animal extends Entity implements IsViable {
         hp = 0;
         hunger = 100;
         foodSearchThreshold = 70;
+        reproductionTime = 30;
+        reproductionCooldown = reproductionTime;
+        sex = null;
     }
 
     public void live(Map map, EntityControlService entityControlService) {
-        if(isDead) {
+        if (isDead) {
             return;
         }
         hunger--;
-        if(hunger <= 0) {
+        if (hunger <= 0) {
             isDead = true;
             return;
         }
         moveToRandomDirection(map);
         eat(entityControlService);
+        reproduction(entityControlService);
     }
 
-    protected void eat(@NotNull EntityControlService entityControlService){
+    protected void eat(@NotNull EntityControlService entityControlService) {
         if (hunger >= foodSearchThreshold) {
             return;
         }
@@ -60,7 +65,7 @@ public abstract class Animal extends Entity implements IsViable {
                         }
                         if (eatableEntity.isAssignableFrom(entity.getEntityType())) {
                             entityControlService.killEntity(entity);
-                            hunger+=10;
+                            hunger += 10;
                             isFound = true;
                             break;
                         }
@@ -96,16 +101,42 @@ public abstract class Animal extends Entity implements IsViable {
         if (tempX >= 0 && tempX < map.getWidth()
                 && tempY >= 0 && tempY < map.getHeight()) {
             var isMovingAvailable = false;
-            for (var tile : map.getTileTypes(tempX,tempY)) {
+            for (var tile : map.getTileTypes(tempX, tempY)) {
                 if (suitableTile.contains(tile)) {
-                   isMovingAvailable = true;
-                   break;
+                    isMovingAvailable = true;
+                    break;
                 }
             }
-            if(isMovingAvailable) {
+            if (isMovingAvailable) {
                 x = tempX;
                 y = tempY;
             }
         }
+    }
+
+    protected void reproduction(@NotNull EntityControlService entityControlService) {
+        if(reproductionCooldown > 0) {
+            reproductionCooldown--;
+            return;
+        }
+        var findEntity = entityControlService.findNearestEntityOfType(entityType, x, y);
+        if (findEntity == null) {
+            return;
+        }
+        var distance = Math.sqrt(Math.pow(x - findEntity.getX(), 2) + Math.pow(y - findEntity.getY(), 2));
+        if (distance < 2) {
+            try {
+                Entity newEntity = (Entity) entityType.newInstance();
+                entityControlService.spawnEntityOnCoordinates(newEntity, x, y);
+                this.updateReproductionCooldown();
+                ((Animal) findEntity).updateReproductionCooldown();
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    protected void updateReproductionCooldown() {
+        reproductionCooldown = reproductionTime;
     }
 }

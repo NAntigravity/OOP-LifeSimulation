@@ -2,6 +2,7 @@ package com.example.lifesimulation.Game;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
@@ -79,7 +80,7 @@ public class EntityControlService {
 
     public void appendExistingEntityCollection() {
         entities.addAll(entitiesToCreate);
-        entitiesToCreate = new Vector<Entity>();
+        entitiesToCreate = new Vector<>();
     }
 
     public boolean isAnyEntityOnCoordinate(Coordinate coordinate) {
@@ -94,48 +95,72 @@ public class EntityControlService {
     public Coordinate findNearestEmptyCoordinate(int x, int y, Map map, Vector<Class> availableTiles) {
         if (!isAnyEntityOnCoordinate(new Coordinate(x - 1, y - 1))) {
             for (var tile : availableTiles) {
+                if(x-1 < 0 || y - 1 < 0) {
+                    return null;
+                }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x - 1, y - 1))) {
                     return new Coordinate(x - 1, y - 1);
                 }
             }
         } else if (!isAnyEntityOnCoordinate(new Coordinate(x - 1, y))) {
             for (var tile : availableTiles) {
+                if(x-1 < 0) {
+                    return null;
+                }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x - 1, y))) {
                     return new Coordinate(x - 1, y);
                 }
             }
         } else if (!isAnyEntityOnCoordinate(new Coordinate(x - 1, y + 1))) {
             for (var tile : availableTiles) {
+                if(x-1 < 0 || y + 1 > map.getHeight()) {
+                    return null;
+                }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x - 1, y + 1))) {
                     return new Coordinate(x - 1, y + 1);
                 }
             }
         } else if (!isAnyEntityOnCoordinate(new Coordinate(x, y + 1))) {
             for (var tile : availableTiles) {
+                if(y + 1 > map.getHeight()) {
+                    return null;
+                }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x, y + 1))) {
                     return new Coordinate(x, y + 1);
                 }
             }
         } else if (!isAnyEntityOnCoordinate(new Coordinate(x + 1, y + 1))) {
             for (var tile : availableTiles) {
+                if(x+1 > map.getWidth() || y + 1 > map.getHeight()) {
+                    return null;
+                }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x + 1, y + 1))) {
                     return new Coordinate(x + 1, y + 1);
                 }
             }
         } else if (!isAnyEntityOnCoordinate(new Coordinate(x + 1, y))) {
             for (var tile : availableTiles) {
+                if(x+1 > map.getWidth()) {
+                    return null;
+                }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x + 1, y))) {
                     return new Coordinate(x + 1, y);
                 }
             }
         } else if (!isAnyEntityOnCoordinate(new Coordinate(x + 1, y - 1))) {
             for (var tile : availableTiles) {
+                if(x+1 > map.getWidth() || y - 1 < 0) {
+                    return null;
+                }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x + 1, y - 1))) {
                     return new Coordinate(x + 1, y - 1);
                 }
             }
         } else if (!isAnyEntityOnCoordinate(new Coordinate(x, y - 1))) {
             for (var tile : availableTiles) {
+                if(y - 1 < 0) {
+                    return null;
+                }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x, y - 1))) {
                     return new Coordinate(x, y - 1);
                 }
@@ -151,5 +176,31 @@ public class EntityControlService {
             }
         }
         return null;
+    }
+
+    public Entity findNearestEntityOfType(Class entityType, int x, int y) {
+        var entityList = getEntitiesByType(entityType);
+        var resultEntity = entityList.stream().min((o1, o2) -> {
+            var distance1 = Math.sqrt(Math.pow(o1.x - x, 2) + Math.pow(o1.y - y, 2));
+            var distance2 = Math.sqrt(Math.pow(x - o2.x, 2) + Math.pow(y - o2.y, 2));
+            if (distance1 > distance2) {
+                return 1;
+            } else if (Math.abs(distance1 - distance2) < 0.0000001) {
+                return 0;
+            } else {
+                return -1;
+            }
+        });
+        return resultEntity.get();
+    }
+
+    public Vector<Entity> getEntitiesByType(Class entityType) {
+        var entityList = new Vector<Entity>();
+        for (var entity : entities) {
+            if (entity.getEntityType() == entityType) {
+                entityList.add(entity);
+            }
+        }
+        return entityList;
     }
 }
