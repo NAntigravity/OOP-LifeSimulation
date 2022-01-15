@@ -3,6 +3,7 @@ package com.example.lifesimulation.Game;
 import com.example.lifesimulation.Game.Animals.Pufferfish;
 import com.example.lifesimulation.Game.Animals.Ship;
 import com.example.lifesimulation.Game.Animals.Turtle;
+import com.example.lifesimulation.Game.Animals.Wolf;
 import com.example.lifesimulation.Game.Nature.Grass;
 import com.example.lifesimulation.Game.Nature.WaterLily;
 
@@ -44,6 +45,8 @@ public class ControlClass implements Serializable {
                     Pufferfish.class,
                     Grass.class,
                     WaterLily.class
+//                    Wolf.class
+
             ));
             int spawnEntityNumber = (int) (Math.random() * entityNameCollection.size());
             try {

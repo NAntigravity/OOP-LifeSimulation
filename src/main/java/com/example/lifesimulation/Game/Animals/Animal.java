@@ -3,7 +3,6 @@ package com.example.lifesimulation.Game.Animals;
 import com.example.lifesimulation.Game.Entity;
 import com.example.lifesimulation.Game.EntityControlService;
 import com.example.lifesimulation.Game.Map;
-import com.example.lifesimulation.Game.Tiles.Tile;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -21,7 +20,7 @@ public abstract class Animal extends Entity {
     public Animal() {
         super();
         entityType = Animal.class;
-        eatableEntities = new Vector<>(List.of(Animal.class));
+        eatableEntities = new Vector<>(List.of(Entity.class));
         hp = 0;
     }
 
@@ -39,15 +38,24 @@ public abstract class Animal extends Entity {
         boolean isFound = false;
         synchronized (allEntity) {
             for (var entity : allEntity) {
-                for (var eatableEntity : eatableEntities) {
-                    if(eatableEntity.isAssignableFrom(entity.getEntityType())) {
-                        entityControlService.killEntity(entity);
-                        isFound = true;
+                if (entity == this) {
+                    continue;
+                }
+                var distance = Math.sqrt(Math.pow(x - entity.getX(), 2) + Math.pow(y - entity.getY(), 2));
+                if (foodSearchArea != null && distance <= foodSearchArea) {
+                    for (var eatableEntity : eatableEntities) {
+                        if (eatableEntity.getName().equals(this.getClass().getName())) {
+                            continue;
+                        }
+                        if (eatableEntity.isAssignableFrom(entity.getEntityType())) {
+                            entityControlService.killEntity(entity);
+                            isFound = true;
+                            break;
+                        }
+                    }
+                    if (isFound) {
                         break;
                     }
-                }
-                if(isFound) {
-                    break;
                 }
             }
         }
