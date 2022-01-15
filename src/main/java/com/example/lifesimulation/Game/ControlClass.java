@@ -44,8 +44,8 @@ public class ControlClass implements Serializable {
                     Ship.class,
                     Pufferfish.class,
                     Grass.class,
-                    WaterLily.class
-//                    Wolf.class
+                    WaterLily.class,
+                    Wolf.class
 
             ));
             int spawnEntityNumber = (int) (Math.random() * entityNameCollection.size());

@@ -16,12 +16,15 @@ public abstract class Animal extends Entity {
     protected Integer speed;
     protected Integer reproductionTime;
     protected Sex sex;
+    protected Integer foodSearchThreshold;
 
     public Animal() {
         super();
         entityType = Animal.class;
         eatableEntities = new Vector<>(List.of(Entity.class));
         hp = 0;
+        hunger = 100;
+        foodSearchThreshold = 70;
     }
 
     @Override
@@ -29,11 +32,19 @@ public abstract class Animal extends Entity {
         if(isDead) {
             return;
         }
+        hunger--;
+        if(hunger <= 0) {
+            isDead = true;
+            return;
+        }
         moveToRandomDirection(map);
         eat(entityControlService);
     }
 
     protected void eat(@NotNull EntityControlService entityControlService){
+        if (hunger >= foodSearchThreshold) {
+            return;
+        }
         var allEntity = entityControlService.getEntities();
         boolean isFound = false;
         synchronized (allEntity) {
@@ -49,6 +60,7 @@ public abstract class Animal extends Entity {
                         }
                         if (eatableEntity.isAssignableFrom(entity.getEntityType())) {
                             entityControlService.killEntity(entity);
+                            hunger+=10;
                             isFound = true;
                             break;
                         }
