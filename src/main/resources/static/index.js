@@ -59,6 +59,12 @@ function switchEntityByID(creation, entity) {
         case "com.example.lifesimulation.Game.Animals.Pufferfish":
             creation.setAttribute('src', 'img/animals/pufferfish.png');
             break;
+        case "com.example.lifesimulation.Game.Nature.Grass":
+            creation.setAttribute('src', 'img/plants/grass.png');
+            break;
+        case "com.example.lifesimulation.Game.Nature.WaterLily":
+            creation.setAttribute('src', 'img/plants/waterLily.png');
+            break;
     }
 }
 
