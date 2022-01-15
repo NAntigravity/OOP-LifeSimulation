@@ -1,5 +1,7 @@
 package com.example.lifesimulation.Game;
 
+import com.example.lifesimulation.Game.Animals.Animal;
+import com.example.lifesimulation.Game.Animals.Sex;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
@@ -95,7 +97,7 @@ public class EntityControlService {
     public Coordinate findNearestEmptyCoordinate(int x, int y, Map map, Vector<Class> availableTiles) {
         if (!isAnyEntityOnCoordinate(new Coordinate(x - 1, y - 1))) {
             for (var tile : availableTiles) {
-                if(x-1 < 0 || y - 1 < 0) {
+                if (x - 1 < 0 || y - 1 < 0) {
                     return null;
                 }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x - 1, y - 1))) {
@@ -104,7 +106,7 @@ public class EntityControlService {
             }
         } else if (!isAnyEntityOnCoordinate(new Coordinate(x - 1, y))) {
             for (var tile : availableTiles) {
-                if(x-1 < 0) {
+                if (x - 1 < 0) {
                     return null;
                 }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x - 1, y))) {
@@ -113,7 +115,7 @@ public class EntityControlService {
             }
         } else if (!isAnyEntityOnCoordinate(new Coordinate(x - 1, y + 1))) {
             for (var tile : availableTiles) {
-                if(x-1 < 0 || y + 1 > map.getHeight()) {
+                if (x - 1 < 0 || y + 1 > map.getHeight()) {
                     return null;
                 }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x - 1, y + 1))) {
@@ -122,7 +124,7 @@ public class EntityControlService {
             }
         } else if (!isAnyEntityOnCoordinate(new Coordinate(x, y + 1))) {
             for (var tile : availableTiles) {
-                if(y + 1 > map.getHeight()) {
+                if (y + 1 > map.getHeight()) {
                     return null;
                 }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x, y + 1))) {
@@ -131,7 +133,7 @@ public class EntityControlService {
             }
         } else if (!isAnyEntityOnCoordinate(new Coordinate(x + 1, y + 1))) {
             for (var tile : availableTiles) {
-                if(x+1 > map.getWidth() || y + 1 > map.getHeight()) {
+                if (x + 1 > map.getWidth() || y + 1 > map.getHeight()) {
                     return null;
                 }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x + 1, y + 1))) {
@@ -140,7 +142,7 @@ public class EntityControlService {
             }
         } else if (!isAnyEntityOnCoordinate(new Coordinate(x + 1, y))) {
             for (var tile : availableTiles) {
-                if(x+1 > map.getWidth()) {
+                if (x + 1 > map.getWidth()) {
                     return null;
                 }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x + 1, y))) {
@@ -149,7 +151,7 @@ public class EntityControlService {
             }
         } else if (!isAnyEntityOnCoordinate(new Coordinate(x + 1, y - 1))) {
             for (var tile : availableTiles) {
-                if(x+1 > map.getWidth() || y - 1 < 0) {
+                if (x + 1 > map.getWidth() || y - 1 < 0) {
                     return null;
                 }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x + 1, y - 1))) {
@@ -158,7 +160,7 @@ public class EntityControlService {
             }
         } else if (!isAnyEntityOnCoordinate(new Coordinate(x, y - 1))) {
             for (var tile : availableTiles) {
-                if(y - 1 < 0) {
+                if (y - 1 < 0) {
                     return null;
                 }
                 if (map.IsTileTypeEqual(tile, map.getTileTypes(x, y - 1))) {
@@ -192,6 +194,25 @@ public class EntityControlService {
             }
         });
         return resultEntity.get();
+    }
+
+    public Entity findNearestAnimalOfOppositeSexByType(Class entityType, Sex sex, int x, int y) {
+        if (!Animal.class.isAssignableFrom(entityType)) {
+            return null;
+        }
+        var entityList = getEntitiesByType(entityType);
+        var resultEntity = entityList.stream().filter(e -> ((Animal) e).getSex() != sex).min((o1, o2) -> {
+            var distance1 = Math.sqrt(Math.pow(o1.x - x, 2) + Math.pow(o1.y - y, 2));
+            var distance2 = Math.sqrt(Math.pow(x - o2.x, 2) + Math.pow(y - o2.y, 2));
+            if (distance1 > distance2) {
+                return 1;
+            } else if (Math.abs(distance1 - distance2) < 0.0000001) {
+                return 0;
+            } else {
+                return -1;
+            }
+        });
+        return resultEntity.orElse(null);
     }
 
     public Vector<Entity> getEntitiesByType(Class entityType) {

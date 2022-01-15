@@ -29,7 +29,7 @@ public abstract class Animal extends Entity implements IsViable {
         foodSearchThreshold = 70;
         reproductionTime = 30;
         reproductionCooldown = reproductionTime;
-        sex = null;
+        sex = Math.random() < 0.5 ? Sex.male : Sex.female;
     }
 
     public void live(Map map, EntityControlService entityControlService) {
@@ -115,11 +115,11 @@ public abstract class Animal extends Entity implements IsViable {
     }
 
     protected void reproduction(@NotNull EntityControlService entityControlService) {
-        if(reproductionCooldown > 0) {
+        if (reproductionCooldown > 0) {
             reproductionCooldown--;
             return;
         }
-        var findEntity = entityControlService.findNearestEntityOfType(entityType, x, y);
+        var findEntity = entityControlService.findNearestAnimalOfOppositeSexByType(entityType, sex, x, y);
         if (findEntity == null) {
             return;
         }
@@ -138,5 +138,9 @@ public abstract class Animal extends Entity implements IsViable {
 
     protected void updateReproductionCooldown() {
         reproductionCooldown = reproductionTime;
+    }
+
+    public Sex getSex() {
+        return sex;
     }
 }

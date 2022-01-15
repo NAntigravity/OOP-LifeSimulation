@@ -16,6 +16,7 @@ public class HumanMale extends Human {
         hp = 100;
         foodSearchArea = 4;
         villageSearchRadius = 10;
+        sex = Sex.male;
     }
 
     private @NotNull Coordinate searchForNearestHouse(@NotNull EntityControlService entityControlService, int x, int y,
