@@ -6,9 +6,6 @@ function switchImageByID(tile, ID) {
         case "com.example.lifesimulation.Game.Tiles.Water":
             tile.setAttribute('src', 'img/tiles/water.png');
             break;
-        case "com.example.lifesimulation.Game.Tiles.Earth":
-            tile.setAttribute('src', 'img/tiles/earth.jpg');
-            break;
         case "com.example.lifesimulation.Game.Tiles.Snow":
             tile.setAttribute('src', 'img/tiles/snow.jpg');
             break;
@@ -58,6 +55,9 @@ function switchEntityByID(creation, entity) {
             break;
         case "com.example.lifesimulation.Game.Animals.Ship":
             creation.setAttribute('src', 'img/animals/ship.png');
+            break;
+        case "com.example.lifesimulation.Game.Animals.Pufferfish":
+            creation.setAttribute('src', 'img/animals/pufferfish.png');
             break;
     }
 }

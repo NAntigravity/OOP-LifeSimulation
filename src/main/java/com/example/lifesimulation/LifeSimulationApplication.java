@@ -14,7 +14,7 @@ public class LifeSimulationApplication {
         SpringApplication.run(LifeSimulationApplication.class, args);
 
         while (true) {
-            game.LiveOneTick();
+            game.liveOneTick();
             try {
                 Thread.sleep(980);
             } catch (InterruptedException e) {

@@ -1,5 +1,7 @@
 package com.example.lifesimulation.Game;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -10,16 +12,17 @@ public class EntityControlService {
     public EntityControlService(Map map) {
         gameField = map;
     }
+
     public Vector<Entity> getEntities() {
         return entities;
     }
 
-    public void spawnEntity(Entity entity) {
-        giveCoordinates(entity);
+    public void spawnEntity(Entity entity, Map map) {
+        setupCoordinates(entity, map);
         entities.add(entity);
     }
 
-    private void giveCoordinates(Entity entity) {
+    private void setupCoordinates(Entity entity, Map map) {
         boolean flag = true;
         while (flag) {
             int x = ThreadLocalRandom.current().nextInt(0, gameField.getWidth());
@@ -33,15 +36,23 @@ public class EntityControlService {
                 }
             }
 
-            if (!overlap) {
-                entity.setX(x);
-                entity.setY(y);
-                flag = false;
+            boolean isSpawnAvailable = false;
+            for (var tile : map.getTileTypes(x,y)) {
+                if (entity.suitableTile.contains(tile)) {
+                    isSpawnAvailable = true;
+                    break;
+                }
+            }
+
+            if (!overlap && isSpawnAvailable) {
+                    entity.setX(x);
+                    entity.setY(y);
+                    flag = false;
             }
         }
     }
 
-    public void killEntity(Entity entity) {
+    public void killEntity(@NotNull Entity entity) {
         entity.isDead = true;
     }
 

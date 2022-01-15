@@ -1,5 +1,6 @@
 package com.example.lifesimulation.Game;
 
+import com.example.lifesimulation.Game.Animals.Pufferfish;
 import com.example.lifesimulation.Game.Animals.Ship;
 import com.example.lifesimulation.Game.Animals.Turtle;
 
@@ -37,15 +38,18 @@ public class ControlClass implements Serializable {
             double flip = Math.random();
             if (flip < 0.3) {
                 Turtle turtle = new Turtle();
-                entityControlService.spawnEntity(turtle);
+                entityControlService.spawnEntity(turtle, gameField);
             } else if (flip < 0.43) {
                 Ship ship = new Ship();
-                entityControlService.spawnEntity(ship);
+                entityControlService.spawnEntity(ship, gameField);
+            } else if (flip < 0.62) {
+                Pufferfish pufferfish = new Pufferfish();
+                entityControlService.spawnEntity(pufferfish, gameField);
             };
         }
     }
 
-    public void LiveOneTick() {
+    public void liveOneTick() {
         var entities = entityControlService.getEntities();
         synchronized (entities) {
             for (Entity entity : entities) {

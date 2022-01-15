@@ -9,6 +9,7 @@ public class Pufferfish extends Herbivore {
     public Pufferfish() {
         super();
         entityType = Pufferfish.class;
-        suitableTileForMoving = new Vector<>(List.of(Water.class));
+        suitableTile = new Vector<>(List.of(Water.class));
+        hp = 20;
     }
 }

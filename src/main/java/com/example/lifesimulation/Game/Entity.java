@@ -1,6 +1,10 @@
 package com.example.lifesimulation.Game;
 
+import com.example.lifesimulation.Game.Tiles.Tile;
+
 import java.io.Serializable;
+import java.util.List;
+import java.util.Vector;
 
 public abstract class Entity implements Serializable {
     protected Class entityType;
@@ -8,10 +12,12 @@ public abstract class Entity implements Serializable {
     protected Integer x;
     protected Integer y;
     public boolean isDead = false;
+    protected Vector<Class> suitableTile;
 
     public Entity() {
         entityType = Entity.class;
         hp = 0;
+        suitableTile = new Vector<>(List.of(Tile.class));
     }
 
     public Integer getHp() {

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Scope;
 public class LifeSimulationConfiguration {
     @Bean
     @Scope("singleton")
-    public ControlClass getControlClass(){
+    public ControlClass getControlClass() {
         return ControlClass.getInstance();
     }
 }

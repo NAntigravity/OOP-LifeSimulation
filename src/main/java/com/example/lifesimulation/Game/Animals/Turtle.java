@@ -11,7 +11,8 @@ public class Turtle extends Herbivore {
     public Turtle() {
         super();
         entityType = Turtle.class;
-        suitableTileForMoving = new Vector<>(List.of(Desert.class, Water.class));
+        suitableTile = new Vector<>(List.of(Desert.class, Water.class));
         eatableEntities = new Vector<>(List.of(Plant.class));
+        hp = 30;
     }
 }

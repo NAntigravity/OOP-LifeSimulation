@@ -7,5 +7,4 @@ public class Water extends LiquidTile {
         super();
         tileType = Collections.singleton(Water.class);
     }
-
 }

@@ -3,22 +3,26 @@ package com.example.lifesimulation.Game.Animals;
 import com.example.lifesimulation.Game.Entity;
 import com.example.lifesimulation.Game.EntityControlService;
 import com.example.lifesimulation.Game.Map;
-import com.example.lifesimulation.Game.SeasonDependent;
 import com.example.lifesimulation.Game.Tiles.Tile;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class Animal extends Entity implements SeasonDependent {
+public abstract class Animal extends Entity {
     protected Vector<Class> eatableEntities;
-    protected Vector<Class> suitableTileForMoving;
+    protected Integer hunger;
+    protected Integer foodSearchArea;
+    protected Integer speed;
+    protected Integer reproductionTime;
+    protected Sex sex;
 
     public Animal() {
         super();
         entityType = Animal.class;
         eatableEntities = new Vector<>(List.of(Animal.class));
-        suitableTileForMoving = new Vector<>(List.of(Tile.class));
+        hp = 0;
     }
 
     @Override
@@ -30,7 +34,7 @@ public abstract class Animal extends Entity implements SeasonDependent {
         eat(entityControlService);
     }
 
-    protected void eat(EntityControlService entityControlService){
+    protected void eat(@NotNull EntityControlService entityControlService){
         var allEntity = entityControlService.getEntities();
         boolean isFound = false;
         synchronized (allEntity) {
@@ -73,7 +77,7 @@ public abstract class Animal extends Entity implements SeasonDependent {
                 && tempY >= 0 && tempY < map.getHeight()) {
             var isMovingAvailable = false;
             for (var tile : map.getTileTypes(tempX,tempY)) {
-                if (suitableTileForMoving.contains(tile)) {
+                if (suitableTile.contains(tile)) {
                    isMovingAvailable = true;
                    break;
                 }
