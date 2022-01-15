@@ -28,8 +28,6 @@ public abstract class Entity implements Serializable {
         return entityType;
     }
 
-    public void live(Map map, EntityControlService entityControlService){}
-
     public Integer getX() {
         return x;
     }

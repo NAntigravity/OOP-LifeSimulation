@@ -1,9 +1,6 @@
 package com.example.lifesimulation.Game;
 
-import com.example.lifesimulation.Game.Animals.Pufferfish;
-import com.example.lifesimulation.Game.Animals.Ship;
-import com.example.lifesimulation.Game.Animals.Turtle;
-import com.example.lifesimulation.Game.Animals.Wolf;
+import com.example.lifesimulation.Game.Animals.*;
 import com.example.lifesimulation.Game.Nature.Grass;
 import com.example.lifesimulation.Game.Nature.WaterLily;
 
@@ -45,13 +42,14 @@ public class ControlClass implements Serializable {
                     Pufferfish.class,
                     Grass.class,
                     WaterLily.class,
-                    Wolf.class
+                    Wolf.class,
+                    HumanMale.class
 
             ));
             int spawnEntityNumber = (int) (Math.random() * entityNameCollection.size());
             try {
                 Entity entityToSpawn = entityNameCollection.get(spawnEntityNumber).newInstance();
-                entityControlService.spawnEntity(entityToSpawn, gameField);
+                entityControlService.spawnEntityOnRandomCoordinates(entityToSpawn, gameField);
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
@@ -62,9 +60,12 @@ public class ControlClass implements Serializable {
         var entities = entityControlService.getEntities();
         synchronized (entities) {
             for (Entity entity : entities) {
-                entity.live(gameField, entityControlService);
+                if (entity instanceof IsViable) {
+                    ((IsViable) entity).live(gameField, entityControlService);
+                }
             }
             entityControlService.clearKilledEntities();
+            entityControlService.appendExistingEntityCollection();
         }
     }
 

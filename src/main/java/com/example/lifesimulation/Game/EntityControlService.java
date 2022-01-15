@@ -8,6 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class EntityControlService {
     private final Vector<Entity> entities = new Vector<>();
     private final Map gameField;
+    private Vector<Entity> entitiesToCreate = new Vector<>();
 
     public EntityControlService(Map map) {
         gameField = map;
@@ -17,39 +18,47 @@ public class EntityControlService {
         return entities;
     }
 
-    public void spawnEntity(Entity entity, Map map) {
-        setupCoordinates(entity, map);
-        entities.add(entity);
+    public void spawnEntityOnCoordinates(@NotNull Entity entity, int x, int y) {
+        entity.setX(x);
+        entity.setY(y);
+        entitiesToCreate.add(entity);
     }
 
-    private void setupCoordinates(Entity entity, Map map) {
-        boolean flag = true;
-        while (flag) {
+    public void spawnEntityOnRandomCoordinates(Entity entity, Map map) {
+        boolean flag = false;
+        while (!flag) {
             int x = ThreadLocalRandom.current().nextInt(0, gameField.getWidth());
             int y = ThreadLocalRandom.current().nextInt(0, gameField.getHeight());
+            flag = trySetupCoordinates(entity,map, x, y);
+        }
+    }
 
-            boolean overlap = false;
-            for (Entity e : entities) {
-                if (x == e.getX() && y == e.getY()) {
-                    overlap = true;
-                    break;
-                }
-            }
+    private boolean trySetupCoordinates(Entity entity, Map map, int x, int y) {
+        boolean overlap = isOverlapByAnotherEntity(x, y);
+        boolean isSpawnAvailable = isSpawnAvailableByTileType(entity, map, x, y);
+        if (!overlap && isSpawnAvailable) {
+            spawnEntityOnCoordinates(entity, x, y);
+            return true;
+        }
+        return false;
+    }
 
-            boolean isSpawnAvailable = false;
-            for (var tile : map.getTileTypes(x,y)) {
-                if (entity.suitableTile.contains(tile)) {
-                    isSpawnAvailable = true;
-                    break;
-                }
-            }
-
-            if (!overlap && isSpawnAvailable) {
-                    entity.setX(x);
-                    entity.setY(y);
-                    flag = false;
+    private boolean isOverlapByAnotherEntity(int x, int y) {
+        for (Entity e : entities) {
+            if (x == e.getX() && y == e.getY()) {
+                return true;
             }
         }
+        return false;
+    }
+
+    private boolean isSpawnAvailableByTileType(Entity entity, @NotNull Map map, int x, int y) {
+        for (var tile : map.getTileTypes(x,y)) {
+            if (entity.suitableTile.contains(tile)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void killEntity(@NotNull Entity entity) {
@@ -65,5 +74,9 @@ public class EntityControlService {
                 entitySize--;
             }
         }
+    }
+    public void appendExistingEntityCollection(){
+        entities.addAll(entitiesToCreate);
+        entitiesToCreate = new Vector<Entity>();
     }
 }

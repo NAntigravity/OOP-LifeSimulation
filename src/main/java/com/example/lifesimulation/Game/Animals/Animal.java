@@ -3,13 +3,14 @@ package com.example.lifesimulation.Game.Animals;
 import com.example.lifesimulation.Game.Entity;
 import com.example.lifesimulation.Game.EntityControlService;
 import com.example.lifesimulation.Game.Map;
+import com.example.lifesimulation.Game.Nature.Plant;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class Animal extends Entity {
+public abstract class Animal extends Entity implements IsViable {
     protected Vector<Class> eatableEntities;
     protected Integer hunger;
     protected Integer foodSearchArea;
@@ -21,13 +22,12 @@ public abstract class Animal extends Entity {
     public Animal() {
         super();
         entityType = Animal.class;
-        eatableEntities = new Vector<>(List.of(Entity.class));
+        eatableEntities = new Vector<>(List.of(Plant.class, Animal.class));
         hp = 0;
         hunger = 100;
         foodSearchThreshold = 70;
     }
 
-    @Override
     public void live(Map map, EntityControlService entityControlService) {
         if(isDead) {
             return;
