@@ -7,6 +7,7 @@ import com.example.lifesimulation.Game.Nature.Grass;
 import com.example.lifesimulation.Game.Nature.WaterLily;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Vector;
 
 public class ControlClass implements Serializable {
@@ -37,27 +38,19 @@ public class ControlClass implements Serializable {
 
     public void run() {
         for (int i = 0; i < 100; i++) {
-            var categoryCountNumber = 5;
-            int spawnEntityNumber = (int) (Math.random() * categoryCountNumber);
-            if (spawnEntityNumber == 0) {
-                Turtle turtle = new Turtle();
-                entityControlService.spawnEntity(turtle, gameField);
-            }
-            if (spawnEntityNumber == 1) {
-                Ship ship = new Ship();
-                entityControlService.spawnEntity(ship, gameField);
-            }
-            if (spawnEntityNumber == 2) {
-                Pufferfish pufferfish = new Pufferfish();
-                entityControlService.spawnEntity(pufferfish, gameField);
-            }
-            if (spawnEntityNumber == 3) {
-                WaterLily waterLily = new WaterLily();
-                entityControlService.spawnEntity(waterLily, gameField);
-            }
-            if (spawnEntityNumber == 4) {
-                Grass grass = new Grass();
-                entityControlService.spawnEntity(grass, gameField);
+            var entityNameCollection = new Vector<>(List.of(
+                    Turtle.class.getName(),
+                    Ship.class.getName(),
+                    Pufferfish.class.getName(),
+                    Grass.class.getName(),
+                    WaterLily.class.getName()
+            ));
+            int spawnEntityNumber = (int) (Math.random() * entityNameCollection.size());
+            try {
+                Entity entityToSpawn = (Entity) Class.forName(entityNameCollection.get(spawnEntityNumber)).newInstance();
+                entityControlService.spawnEntity(entityToSpawn, gameField);
+            } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
     }
