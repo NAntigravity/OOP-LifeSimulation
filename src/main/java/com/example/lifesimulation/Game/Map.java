@@ -5,6 +5,7 @@ import com.example.lifesimulation.Game.Tiles.LiquidTile;
 import com.example.lifesimulation.Game.Tiles.SolidTile;
 import com.example.lifesimulation.Game.Tiles.Tile;
 import com.example.lifesimulation.Game.Tiles.Water;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -67,5 +68,14 @@ public class Map implements Serializable {
 
     public Set<Class> getTileTypes(int x, int y) {
         return tiles.get(y).get(x).getTileType();
+    }
+
+    public boolean IsTileTypeEqual(Class tileClass, @NotNull Set<Class> currentTileClasses) {
+        for (var tile : currentTileClasses) {
+            if(tileClass.isAssignableFrom(tile)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

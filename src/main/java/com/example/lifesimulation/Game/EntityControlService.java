@@ -2,6 +2,7 @@ package com.example.lifesimulation.Game;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -29,7 +30,7 @@ public class EntityControlService {
         while (!flag) {
             int x = ThreadLocalRandom.current().nextInt(0, gameField.getWidth());
             int y = ThreadLocalRandom.current().nextInt(0, gameField.getHeight());
-            flag = trySetupCoordinates(entity,map, x, y);
+            flag = trySetupCoordinates(entity, map, x, y);
         }
     }
 
@@ -53,7 +54,7 @@ public class EntityControlService {
     }
 
     private boolean isSpawnAvailableByTileType(Entity entity, @NotNull Map map, int x, int y) {
-        for (var tile : map.getTileTypes(x,y)) {
+        for (var tile : map.getTileTypes(x, y)) {
             if (entity.suitableTile.contains(tile)) {
                 return true;
             }
@@ -67,16 +68,88 @@ public class EntityControlService {
 
     public void clearKilledEntities() {
         var entitySize = entities.size();
-        for(int i = 0; i < entitySize; i++) {
-            if(entities.get(i).isDead) {
+        for (int i = 0; i < entitySize; i++) {
+            if (entities.get(i).isDead) {
                 entities.remove(entities.get(i));
                 i--;
                 entitySize--;
             }
         }
     }
-    public void appendExistingEntityCollection(){
+
+    public void appendExistingEntityCollection() {
         entities.addAll(entitiesToCreate);
         entitiesToCreate = new Vector<Entity>();
+    }
+
+    public boolean isAnyEntityOnCoordinate(Coordinate coordinate) {
+        for (var entity : entities) {
+            if (Objects.equals(entity.getX(), coordinate.x) && Objects.equals(entity.getY(), coordinate.y)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Coordinate findNearestEmptyCoordinate(int x, int y, Map map, Vector<Class> availableTiles) {
+        if (!isAnyEntityOnCoordinate(new Coordinate(x - 1, y - 1))) {
+            for (var tile : availableTiles) {
+                if (map.IsTileTypeEqual(tile, map.getTileTypes(x - 1, y - 1))) {
+                    return new Coordinate(x - 1, y - 1);
+                }
+            }
+        } else if (!isAnyEntityOnCoordinate(new Coordinate(x - 1, y))) {
+            for (var tile : availableTiles) {
+                if (map.IsTileTypeEqual(tile, map.getTileTypes(x - 1, y))) {
+                    return new Coordinate(x - 1, y);
+                }
+            }
+        } else if (!isAnyEntityOnCoordinate(new Coordinate(x - 1, y + 1))) {
+            for (var tile : availableTiles) {
+                if (map.IsTileTypeEqual(tile, map.getTileTypes(x - 1, y + 1))) {
+                    return new Coordinate(x - 1, y + 1);
+                }
+            }
+        } else if (!isAnyEntityOnCoordinate(new Coordinate(x, y + 1))) {
+            for (var tile : availableTiles) {
+                if (map.IsTileTypeEqual(tile, map.getTileTypes(x, y + 1))) {
+                    return new Coordinate(x, y + 1);
+                }
+            }
+        } else if (!isAnyEntityOnCoordinate(new Coordinate(x + 1, y + 1))) {
+            for (var tile : availableTiles) {
+                if (map.IsTileTypeEqual(tile, map.getTileTypes(x + 1, y + 1))) {
+                    return new Coordinate(x + 1, y + 1);
+                }
+            }
+        } else if (!isAnyEntityOnCoordinate(new Coordinate(x + 1, y))) {
+            for (var tile : availableTiles) {
+                if (map.IsTileTypeEqual(tile, map.getTileTypes(x + 1, y))) {
+                    return new Coordinate(x + 1, y);
+                }
+            }
+        } else if (!isAnyEntityOnCoordinate(new Coordinate(x + 1, y - 1))) {
+            for (var tile : availableTiles) {
+                if (map.IsTileTypeEqual(tile, map.getTileTypes(x + 1, y - 1))) {
+                    return new Coordinate(x + 1, y - 1);
+                }
+            }
+        } else if (!isAnyEntityOnCoordinate(new Coordinate(x, y - 1))) {
+            for (var tile : availableTiles) {
+                if (map.IsTileTypeEqual(tile, map.getTileTypes(x, y - 1))) {
+                    return new Coordinate(x, y - 1);
+                }
+            }
+        }
+        return findNearestEmptyCoordinate(x - 1, y - 1, map, availableTiles);
+    }
+
+    public Entity getEntityByCoordinate(int x, int y) {
+        for (var entity : entities) {
+            if (entity.getX() == x && entity.getY() == y) {
+                return entity;
+            }
+        }
+        return null;
     }
 }
