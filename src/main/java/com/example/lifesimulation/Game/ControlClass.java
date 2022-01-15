@@ -39,17 +39,17 @@ public class ControlClass implements Serializable {
     public void run() {
         for (int i = 0; i < 100; i++) {
             var entityNameCollection = new Vector<>(List.of(
-                    Turtle.class.getName(),
-                    Ship.class.getName(),
-                    Pufferfish.class.getName(),
-                    Grass.class.getName(),
-                    WaterLily.class.getName()
+                    Turtle.class,
+                    Ship.class,
+                    Pufferfish.class,
+                    Grass.class,
+                    WaterLily.class
             ));
             int spawnEntityNumber = (int) (Math.random() * entityNameCollection.size());
             try {
-                Entity entityToSpawn = (Entity) Class.forName(entityNameCollection.get(spawnEntityNumber)).newInstance();
+                Entity entityToSpawn = entityNameCollection.get(spawnEntityNumber).newInstance();
                 entityControlService.spawnEntity(entityToSpawn, gameField);
-            } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+            } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
