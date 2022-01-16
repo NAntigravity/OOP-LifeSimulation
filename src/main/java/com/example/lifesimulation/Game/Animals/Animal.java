@@ -14,10 +14,14 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class Animal extends Entity implements IViable {
     protected Vector<Class> eatableEntities;
     protected Integer hunger;
-    protected Integer foodSearchArea;
-    protected Integer reproductionTime;
-    public Integer reproductionCooldown;
     protected Sex sex;
+    @JsonIgnore
+    protected Integer foodSearchArea;
+    @JsonIgnore
+    protected Integer reproductionTime;
+    @JsonIgnore
+    public Integer reproductionCooldown;
+    @JsonIgnore
     protected Integer foodSearchThreshold;
     @JsonIgnore
     protected Entity target;

@@ -5,6 +5,7 @@ import com.example.lifesimulation.Game.Buildings.House;
 import com.example.lifesimulation.Game.EntityControlService;
 import com.example.lifesimulation.Game.Map;
 import com.example.lifesimulation.Game.Tiles.Desert;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Vector;
@@ -13,6 +14,7 @@ public abstract class Human extends Animal {
     protected House house;
     protected IAge age;
     protected Integer growingTime;
+    protected IWork job;
 
     public Human(IAge age) {
         super();
@@ -21,7 +23,7 @@ public abstract class Human extends Animal {
         foodSearchArea = 4;
         suitableTile = new Vector<>(List.of(Desert.class));
         house = null;
-        this.age = age;
+        changeAge(age);
         reproductionTime = 15;
         reproductionCooldown = 15;
         growingTime = 10;
@@ -43,6 +45,9 @@ public abstract class Human extends Animal {
                 changeAge(new HumanAdult());
             }
         }
+        if (job != null) {
+            job.work(this, entityControlService, map);
+        }
         moveToRandomDirection(map);
         age.humanEat(this, entityControlService);
         age.humanReproduction(this, entityControlService);
@@ -61,9 +66,15 @@ public abstract class Human extends Animal {
         this.house = house;
     }
 
-    public void changeAge(IAge age) {
+    public void changeAge(@NotNull IAge age) {
         this.age = age;
+        if (age.getClass() == HumanAdult.class){
+            setJob(new Builder());
+        }
     }
 
     public abstract void liveSpecificSexLife(Map map, EntityControlService entityControlService);
+    public void setJob(IWork job){
+        this.job = job;
+    }
 }

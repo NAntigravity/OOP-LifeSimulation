@@ -43,4 +43,8 @@ public abstract class Entity implements Serializable {
     public void setY(Integer y) {
         this.y = y;
     }
+
+    public Vector<Class> getSuitableTile() {
+        return suitableTile;
+    }
 }
