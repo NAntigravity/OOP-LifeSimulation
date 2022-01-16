@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class Animal extends Entity implements IsViable {
+public abstract class Animal extends Entity implements IViable {
     protected Vector<Class> eatableEntities;
     protected Integer hunger;
     protected Integer foodSearchArea;
     protected Integer speed;
     protected Integer reproductionTime;
-    protected Integer reproductionCooldown;
+    public Integer reproductionCooldown;
     protected Sex sex;
     protected Integer foodSearchThreshold;
 
@@ -46,7 +46,7 @@ public abstract class Animal extends Entity implements IsViable {
         reproduction(entityControlService);
     }
 
-    protected void eat(@NotNull EntityControlService entityControlService) {
+    public void eat(@NotNull EntityControlService entityControlService) {
         if (hunger >= foodSearchThreshold) {
             return;
         }
@@ -114,7 +114,7 @@ public abstract class Animal extends Entity implements IsViable {
         }
     }
 
-    protected void reproduction(@NotNull EntityControlService entityControlService) {
+    public void reproduction(@NotNull EntityControlService entityControlService) {
         if (reproductionCooldown > 0) {
             reproductionCooldown--;
             return;
@@ -136,7 +136,7 @@ public abstract class Animal extends Entity implements IsViable {
         }
     }
 
-    protected void updateReproductionCooldown() {
+    public void updateReproductionCooldown() {
         reproductionCooldown = reproductionTime;
     }
 

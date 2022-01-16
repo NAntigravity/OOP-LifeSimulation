@@ -1,6 +1,9 @@
 package com.example.lifesimulation.Game;
 
 import com.example.lifesimulation.Game.Animals.*;
+import com.example.lifesimulation.Game.Animals.Humanity.HumanAdult;
+import com.example.lifesimulation.Game.Animals.Humanity.HumanFemale;
+import com.example.lifesimulation.Game.Animals.Humanity.HumanMale;
 import com.example.lifesimulation.Game.Nature.Grass;
 import com.example.lifesimulation.Game.Nature.WaterLily;
 
@@ -49,8 +52,16 @@ public class ControlClass implements Serializable {
             ));
             int spawnEntityNumber = (int) (Math.random() * entityNameCollection.size());
             try {
-                Entity entityToSpawn = entityNameCollection.get(spawnEntityNumber).newInstance();
-                entityControlService.spawnEntityOnRandomCoordinates(entityToSpawn, gameField);
+                if(spawnEntityNumber == 6) {
+                    Entity entityToSpawn = new HumanMale(new HumanAdult());
+                    entityControlService.spawnEntityOnRandomCoordinates(entityToSpawn, gameField);
+                } else if(spawnEntityNumber == 7) {
+                    Entity entityToSpawn = new HumanFemale(new HumanAdult());
+                    entityControlService.spawnEntityOnRandomCoordinates(entityToSpawn, gameField);
+                } else {
+                    Entity entityToSpawn = entityNameCollection.get(spawnEntityNumber).newInstance();
+                    entityControlService.spawnEntityOnRandomCoordinates(entityToSpawn, gameField);
+                }
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
@@ -61,8 +72,8 @@ public class ControlClass implements Serializable {
         var entities = entityControlService.getEntities();
         synchronized (entities) {
             for (Entity entity : entities) {
-                if (entity instanceof IsViable) {
-                    ((IsViable) entity).live(gameField, entityControlService);
+                if (entity instanceof IViable) {
+                    ((IViable) entity).live(gameField, entityControlService);
                 }
             }
             entityControlService.clearKilledEntities();

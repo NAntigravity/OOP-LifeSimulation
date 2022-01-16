@@ -47,6 +47,25 @@ async function mapCreation() {
     }
 }
 
+function switchHumanByAge(creation, entity){
+    let ID = entity.entityType;
+    let AGE = entity.humanAge.AgeType;
+
+    switch (AGE){
+        case "com.example.lifesimulation.Game.Animals.Humanity.HumanChild":
+            creation.setAttribute('src', 'img/animals/child.png')
+            break;
+        case "com.example.lifesimulation.Game.Animals.Humanity.HumanAdult":
+            if (ID === "com.example.lifesimulation.Game.Animals.Humanity.HumanMale") {
+                creation.setAttribute('src', 'img/animals/human.jpg')
+                break;
+            } else {
+                creation.setAttribute('src', 'img/animals/humanFemale.png')
+                break;
+            }
+    }
+}
+
 function switchEntityByID(creation, entity) {
     let ID = entity.entityType;
     switch (ID) {
@@ -56,11 +75,9 @@ function switchEntityByID(creation, entity) {
         case "com.example.lifesimulation.Game.Buildings.House":
             creation.setAttribute('src', 'img/buildings/house.png');
             break;
-        case "com.example.lifesimulation.Game.Animals.HumanMale":
-            creation.setAttribute('src', 'img/animals/human.jpg');
-            break;
-        case "com.example.lifesimulation.Game.Animals.HumanFemale":
-            creation.setAttribute('src', 'img/animals/humanFemale.png');
+        case "com.example.lifesimulation.Game.Animals.Humanity.HumanMale":
+        case "com.example.lifesimulation.Game.Animals.Humanity.HumanFemale":
+            switchHumanByAge(creation, entity);
             break;
         case "com.example.lifesimulation.Game.Animals.Wolf":
             creation.setAttribute('src', 'img/animals/wolf.jpg');

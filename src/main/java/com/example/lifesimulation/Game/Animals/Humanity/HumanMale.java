@@ -1,5 +1,6 @@
-package com.example.lifesimulation.Game.Animals;
+package com.example.lifesimulation.Game.Animals.Humanity;
 
+import com.example.lifesimulation.Game.Animals.Sex;
 import com.example.lifesimulation.Game.Buildings.House;
 import com.example.lifesimulation.Game.Buildings.Village;
 import com.example.lifesimulation.Game.Coordinate;
@@ -10,8 +11,8 @@ import org.jetbrains.annotations.NotNull;
 public class HumanMale extends Human {
     private final int villageSearchRadius;
 
-    public HumanMale() {
-        super();
+    public HumanMale(IAge age) {
+        super(age);
         entityType = HumanMale.class;
         hp = 100;
         foodSearchArea = 4;
@@ -56,11 +57,11 @@ public class HumanMale extends Human {
     }
 
     @Override
-    public void live(Map map, EntityControlService entityControlService) {
+    public void liveSpecificSexLife(Map map, EntityControlService entityControlService) {
         var randValue = Math.random();
         if (randValue < 0.01) {
             buildHouse(entityControlService, map);
         }
-        super.live(map, entityControlService);
     }
+
 }
