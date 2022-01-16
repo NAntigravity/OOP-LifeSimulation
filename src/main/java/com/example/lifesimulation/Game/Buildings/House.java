@@ -1,6 +1,7 @@
 package com.example.lifesimulation.Game.Buildings;
 
 import com.example.lifesimulation.Game.Entity;
+import com.example.lifesimulation.Game.Food.Food;
 import com.example.lifesimulation.Game.Tiles.Desert;
 
 import java.util.List;
@@ -24,5 +25,10 @@ public class House extends Entity {
 
     public void setVillage(Village village) {
         this.village = village;
+    }
+
+    @Override
+    public Food getHarvest() {
+        return null;
     }
 }

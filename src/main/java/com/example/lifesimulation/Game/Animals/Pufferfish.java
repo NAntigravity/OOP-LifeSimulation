@@ -1,5 +1,6 @@
 package com.example.lifesimulation.Game.Animals;
 
+import com.example.lifesimulation.Game.Nature.WaterLily;
 import com.example.lifesimulation.Game.Tiles.Water;
 
 import java.util.List;
@@ -12,5 +13,6 @@ public class Pufferfish extends Herbivore {
         suitableTile = new Vector<>(List.of(Water.class));
         hp = 20;
         foodSearchArea = 2;
+        eatableEntities = new Vector<>(List.of(WaterLily.class));
     }
 }

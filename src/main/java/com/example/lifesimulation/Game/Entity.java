@@ -1,6 +1,8 @@
 package com.example.lifesimulation.Game;
 
+import com.example.lifesimulation.Game.Food.Food;
 import com.example.lifesimulation.Game.Tiles.Tile;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.List;
@@ -43,6 +45,8 @@ public abstract class Entity implements Serializable {
     public void setY(Integer y) {
         this.y = y;
     }
+
+    public abstract Food getHarvest();
 
     public Vector<Class> getSuitableTile() {
         return suitableTile;

@@ -9,5 +9,6 @@ public class Grass extends Plant {
     public Grass() {
         entityType = Grass.class;
         suitableTile = new Vector<>(List.of(Desert.class));
+        hp = 20;
     }
 }

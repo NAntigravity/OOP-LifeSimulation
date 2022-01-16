@@ -5,6 +5,7 @@ import com.example.lifesimulation.Game.Map;
 
 public class HumanChild implements IAge {
     public final Class AgeType = HumanChild.class;
+
     @Override
     public void humanEat(Human human, EntityControlService entityControlService) {
         //Specific logic of eating process

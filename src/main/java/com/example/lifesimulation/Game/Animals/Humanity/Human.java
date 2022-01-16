@@ -3,8 +3,10 @@ package com.example.lifesimulation.Game.Animals.Humanity;
 import com.example.lifesimulation.Game.Animals.Animal;
 import com.example.lifesimulation.Game.Buildings.House;
 import com.example.lifesimulation.Game.EntityControlService;
+import com.example.lifesimulation.Game.Food.Food;
 import com.example.lifesimulation.Game.Map;
 import com.example.lifesimulation.Game.Tiles.Desert;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -15,6 +17,10 @@ public abstract class Human extends Animal {
     protected IAge age;
     protected Integer growingTime;
     protected IWork job;
+    @JsonIgnore
+    protected Vector<Food> inventory;
+    @JsonIgnore
+    protected Integer inventorySpace;
 
     public Human(IAge age) {
         super();
@@ -27,6 +33,9 @@ public abstract class Human extends Animal {
         reproductionTime = 15;
         reproductionCooldown = 15;
         growingTime = 10;
+        hunger = 150;
+        inventorySpace = 0;
+        inventory = new Vector<>();
     }
 
     @Override
@@ -68,13 +77,33 @@ public abstract class Human extends Animal {
 
     public void changeAge(@NotNull IAge age) {
         this.age = age;
-        if (age.getClass() == HumanAdult.class){
+        if (age.getClass() == HumanAdult.class) {
             setJob(new Builder());
         }
     }
 
+    public void addItemToInventory(Food food) {
+        inventory.add(food);
+    }
+
+    public void feedFromInventory(@NotNull Human human) {
+        human.feed(getInventoryCount() == 0 ? null : inventory.firstElement());
+    }
+
     public abstract void liveSpecificSexLife(Map map, EntityControlService entityControlService);
-    public void setJob(IWork job){
+
+    public void setJob(IWork job) {
         this.job = job;
     }
+
+    public void feed(Food food) {
+        if (food != null) {
+            hunger += food.size;
+        }
+    }
+
+    public Integer getInventoryCount(){
+        return inventory.size();
+    }
+
 }

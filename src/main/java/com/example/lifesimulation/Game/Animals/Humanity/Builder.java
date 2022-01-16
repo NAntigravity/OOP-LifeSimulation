@@ -22,6 +22,7 @@ public class Builder extends LazyHuman {
             buildHouse(entityControlService, map, human);
         }
     }
+
     private @NotNull Coordinate searchForNearestHouse(@NotNull EntityControlService entityControlService, int x, int y,
                                                       int searchRadius, Map map, Human human) {
         var allEntities = entityControlService.getEntities();
@@ -30,7 +31,7 @@ public class Builder extends LazyHuman {
                 var distance = Math.sqrt(Math.pow(x - entity.getX(), 2) + Math.pow(y - entity.getY(), 2));
                 if (distance <= searchRadius) {
                     var nearestCoord = entityControlService.findNearestEmptyCoordinate(entity.getX(), entity.getY(), map, human.getSuitableTile());
-                    return nearestCoord == null ? new Coordinate(x,y) : nearestCoord;
+                    return nearestCoord == null ? new Coordinate(x, y) : nearestCoord;
                 }
             }
         }

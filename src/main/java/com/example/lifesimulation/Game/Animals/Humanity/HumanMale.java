@@ -12,6 +12,7 @@ public class HumanMale extends Human {
         hp = 100;
         foodSearchArea = 4;
         sex = Sex.male;
+        inventorySpace = 200;
     }
 
     @Override

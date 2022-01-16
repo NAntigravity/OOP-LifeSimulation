@@ -9,9 +9,43 @@ import org.jetbrains.annotations.NotNull;
 
 public class HumanAdult implements IAge {
     public final Class AgeType = HumanAdult.class;
+
     @Override
     public void humanEat(@NotNull Human human, EntityControlService entityControlService) {
-        human.eat(entityControlService);
+        if (human.getHunger() <= human.getFoodSearchThreshold()) {
+            var allEntity = entityControlService.getEntities();
+            boolean isFound = false;
+            synchronized (allEntity) {
+                for (var entity : allEntity) {
+                    if (entity == human) {
+                        continue;
+                    }
+                    var distance = Math.sqrt(Math.pow(human.getX() - entity.getX(), 2) + Math.pow(human.getY() - entity.getY(), 2));
+                    if (human.getFoodSearchArea() != null && distance <= human.getFoodSearchArea()) {
+                        for (var eatableEntity : human.getEatableEntities()) {
+                            if (eatableEntity.getName().equals(this.getClass().getName())) {
+                                continue;
+                            }
+                            if (eatableEntity.isAssignableFrom(entity.getEntityType())) {
+                                human.addItemToInventory(entity.getHarvest());
+                                entityControlService.killEntity(entity);
+                                isFound = true;
+                                break;
+                            }
+                        }
+                        if (isFound) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        if (human.getInventoryCount() == 0 && human.getHunger() < human.getFoodSearchThreshold() / 2) {
+            human.eat(entityControlService);
+        }
+        if (human.getHunger() < human.getFoodSearchThreshold() / 2) {
+            human.feedFromInventory(human);
+        }
     }
 
     @Override
@@ -26,7 +60,7 @@ public class HumanAdult implements IAge {
         if (findEntity == null) {
             return;
         }
-        if (human.getTarget() == null){
+        if (human.getTarget() == null) {
             human.setTarget(findEntity);
         }
         var distance = Math.sqrt(Math.pow(human.getX() - findEntity.getX(), 2) + Math.pow(human.getY() - findEntity.getY(), 2));

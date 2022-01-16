@@ -2,6 +2,8 @@ package com.example.lifesimulation.Game.Animals;
 
 import com.example.lifesimulation.Game.Entity;
 import com.example.lifesimulation.Game.EntityControlService;
+import com.example.lifesimulation.Game.Food.Food;
+import com.example.lifesimulation.Game.Food.Meat;
 import com.example.lifesimulation.Game.Map;
 import com.example.lifesimulation.Game.Nature.Plant;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -194,5 +196,26 @@ public abstract class Animal extends Entity implements IViable {
 
     public Sex getSex() {
         return sex;
+    }
+
+    public Integer getHunger() {
+        return hunger;
+    }
+
+    public Integer getFoodSearchArea() {
+        return foodSearchArea;
+    }
+
+    public Vector<Class> getEatableEntities() {
+        return eatableEntities;
+    }
+
+    public Integer getFoodSearchThreshold() {
+        return foodSearchThreshold;
+    }
+
+    @Override
+    public Food getHarvest(){
+        return new Meat(getHp());
     }
 }
