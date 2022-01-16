@@ -12,6 +12,7 @@ import java.util.Vector;
 public abstract class Human extends Animal {
     protected House house;
     protected IAge age;
+    protected Integer growingTime;
 
     public Human(IAge age) {
         super();
@@ -21,8 +22,9 @@ public abstract class Human extends Animal {
         suitableTile = new Vector<>(List.of(Desert.class));
         house = null;
         this.age = age;
-        reproductionTime = 5;
-        reproductionCooldown = 5;
+        reproductionTime = 15;
+        reproductionCooldown = 15;
+        growingTime = 10;
     }
 
     @Override
@@ -35,22 +37,32 @@ public abstract class Human extends Animal {
             isDead = true;
             return;
         }
+        if (age.getClass() == HumanChild.class) {
+            growingTime--;
+            if (growingTime == 0) {
+                changeAge(new HumanAdult());
+            }
+        }
         moveToRandomDirection(map);
         age.humanEat(this, entityControlService);
         age.humanReproduction(this, entityControlService);
         age.liveSpecificLife(this, map, entityControlService);
     }
 
-    public House getHouse(){
+    public House getHouse() {
         return house;
     }
 
-    public IAge getHumanAge(){
+    public IAge getHumanAge() {
         return age;
     }
 
-    public void setHouse(House house){
+    public void setHouse(House house) {
         this.house = house;
+    }
+
+    public void changeAge(IAge age) {
+        this.age = age;
     }
 
     public abstract void liveSpecificSexLife(Map map, EntityControlService entityControlService);

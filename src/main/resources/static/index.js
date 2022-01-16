@@ -47,11 +47,11 @@ async function mapCreation() {
     }
 }
 
-function switchHumanByAge(creation, entity){
+function switchHumanByAge(creation, entity) {
     let ID = entity.entityType;
     let AGE = entity.humanAge.AgeType;
 
-    switch (AGE){
+    switch (AGE) {
         case "com.example.lifesimulation.Game.Animals.Humanity.HumanChild":
             creation.setAttribute('src', 'img/animals/child.png')
             break;

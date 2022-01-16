@@ -52,10 +52,10 @@ public class ControlClass implements Serializable {
             ));
             int spawnEntityNumber = (int) (Math.random() * entityNameCollection.size());
             try {
-                if(spawnEntityNumber == 6) {
+                if (spawnEntityNumber == 6) {
                     Entity entityToSpawn = new HumanMale(new HumanAdult());
                     entityControlService.spawnEntityOnRandomCoordinates(entityToSpawn, gameField);
-                } else if(spawnEntityNumber == 7) {
+                } else if (spawnEntityNumber == 7) {
                     Entity entityToSpawn = new HumanFemale(new HumanAdult());
                     entityControlService.spawnEntityOnRandomCoordinates(entityToSpawn, gameField);
                 } else {
@@ -70,6 +70,7 @@ public class ControlClass implements Serializable {
 
     public void liveOneTick() {
         var entities = entityControlService.getEntities();
+        var randomValue = Math.random();
         synchronized (entities) {
             for (Entity entity : entities) {
                 if (entity instanceof IViable) {
@@ -77,7 +78,20 @@ public class ControlClass implements Serializable {
                 }
             }
             entityControlService.clearKilledEntities();
+            if (randomValue < 0.4) {
+                addSomePlants();
+            }
             entityControlService.appendExistingEntityCollection();
+        }
+    }
+
+    private void addSomePlants() {
+        var plantTypeList = new Vector<Class>(List.of(Grass.class, WaterLily.class));
+        try {
+            Entity entityToSpawn = (Entity) plantTypeList.get((int)(Math.random() * 2)).newInstance();
+            entityControlService.spawnEntityOnRandomCoordinates(entityToSpawn, gameField);
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 

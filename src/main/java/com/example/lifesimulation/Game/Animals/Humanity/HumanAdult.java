@@ -26,6 +26,9 @@ public class HumanAdult implements IAge {
         if (findEntity == null) {
             return;
         }
+        if (human.getTarget() == null){
+            human.setTarget(findEntity);
+        }
         var distance = Math.sqrt(Math.pow(human.getX() - findEntity.getX(), 2) + Math.pow(human.getY() - findEntity.getY(), 2));
         if (distance < 2) {
             Entity newEntity = Math.random() < 0.5 ? new HumanMale(new HumanChild()) : new HumanFemale(new HumanChild());

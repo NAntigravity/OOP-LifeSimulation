@@ -4,6 +4,7 @@ import com.example.lifesimulation.Game.Animals.Animal;
 import com.example.lifesimulation.Game.Animals.Sex;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
@@ -72,7 +73,16 @@ public class EntityControlService {
         var entitySize = entities.size();
         for (int i = 0; i < entitySize; i++) {
             if (entities.get(i).isDead) {
-                entities.remove(entities.get(i));
+                var entityToRemove = entities.get(i);
+                entities.remove(entityToRemove);
+                for(int j = 0; j < entitySize - 1; j++) {
+                    if (entities.get(j) instanceof Animal) {
+                        Animal entity = (Animal) entities.get(j);
+                        if(entity.getTarget() == entityToRemove) {
+                            entity.setTarget(null);
+                        }
+                    }
+                }
                 i--;
                 entitySize--;
             }
@@ -179,7 +189,7 @@ public class EntityControlService {
         return null;
     }
 
-    public Entity findNearestEntityOfType(Class entityType, int x, int y) {
+    public Entity findNearestEntityOfType(Vector<Class> entityType, int x, int y) {
         var entityList = getEntitiesByType(entityType);
         var resultEntity = entityList.stream().min((o1, o2) -> {
             var distance1 = Math.sqrt(Math.pow(o1.x - x, 2) + Math.pow(o1.y - y, 2));
@@ -199,7 +209,7 @@ public class EntityControlService {
         if (!Animal.class.isAssignableFrom(entityType)) {
             return null;
         }
-        var entityList = getEntitiesByType(entityType);
+        var entityList = getEntitiesByType(new Vector<>(List.of(entityType)));
         var resultEntity = entityList.stream().filter(e -> ((Animal) e).getSex() != sex).min((o1, o2) -> {
             var distance1 = Math.sqrt(Math.pow(o1.x - x, 2) + Math.pow(o1.y - y, 2));
             var distance2 = Math.sqrt(Math.pow(x - o2.x, 2) + Math.pow(y - o2.y, 2));
@@ -214,11 +224,14 @@ public class EntityControlService {
         return resultEntity.orElse(null);
     }
 
-    public Vector<Entity> getEntitiesByType(Class entityType) {
+    public Vector<Entity> getEntitiesByType(Vector<Class> entityType) {
         var entityList = new Vector<Entity>();
         for (var entity : entities) {
-            if (entity.getEntityType() == entityType) {
-                entityList.add(entity);
+            for (var entityFromTypeList : entityType) {
+                if (entityFromTypeList.isAssignableFrom(entity.getEntityType())) {
+                    entityList.add(entity);
+                    break;
+                }
             }
         }
         return entityList;
