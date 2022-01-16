@@ -202,7 +202,7 @@ public class EntityControlService {
                 return -1;
             }
         });
-        return resultEntity.get();
+        return resultEntity.orElse(null);
     }
 
     public Entity findNearestAnimalOfOppositeSexByType(Class entityType, Sex sex, int x, int y) {

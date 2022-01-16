@@ -45,7 +45,7 @@ public abstract class Animal extends Entity implements IViable {
         if (isDead) {
             return;
         }
-        hunger--;
+        hungerTick();
         if (hunger <= 0) {
             isDead = true;
             return;
@@ -217,5 +217,9 @@ public abstract class Animal extends Entity implements IViable {
     @Override
     public Food getHarvest(){
         return new Meat(getHp());
+    }
+
+    public void hungerTick() {
+        hunger--;
     }
 }

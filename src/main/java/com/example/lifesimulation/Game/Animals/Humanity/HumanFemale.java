@@ -13,6 +13,14 @@ public class HumanFemale extends Human {
         sex = Sex.female;
         inventorySpace = 300;
     }
+    public HumanFemale(IAge age, Human parentOne, Human parentTwo) {
+        super(age, parentOne, parentTwo);
+        entityType = HumanFemale.class;
+        hp = 100;
+        foodSearchArea = 4;
+        sex = Sex.female;
+        inventorySpace = 300;
+    }
 
     @Override
     public void liveSpecificSexLife(Map map, EntityControlService entityControlService) {

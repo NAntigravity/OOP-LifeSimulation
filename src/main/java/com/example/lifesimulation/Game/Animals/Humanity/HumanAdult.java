@@ -65,7 +65,9 @@ public class HumanAdult implements IAge {
         }
         var distance = Math.sqrt(Math.pow(human.getX() - findEntity.getX(), 2) + Math.pow(human.getY() - findEntity.getY(), 2));
         if (distance < 2) {
-            Entity newEntity = Math.random() < 0.5 ? new HumanMale(new HumanChild()) : new HumanFemale(new HumanChild());
+            Entity newEntity = Math.random() < 0.5
+                    ? new HumanMale(new HumanChild(), human, (Human)findEntity)
+                    : new HumanFemale(new HumanChild(), human, (Human)findEntity);
             entityControlService.spawnEntityOnCoordinates(newEntity, human.getX(), human.getY());
             human.updateReproductionCooldown();
             ((Animal) findEntity).updateReproductionCooldown();

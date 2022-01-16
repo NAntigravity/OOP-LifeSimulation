@@ -1,10 +1,13 @@
 package com.example.lifesimulation.Game.Animals.Humanity;
 
 import com.example.lifesimulation.Game.Animals.Animal;
+import com.example.lifesimulation.Game.Animals.Herbivore;
+import com.example.lifesimulation.Game.Animals.Predator;
 import com.example.lifesimulation.Game.Buildings.House;
 import com.example.lifesimulation.Game.EntityControlService;
 import com.example.lifesimulation.Game.Food.Food;
 import com.example.lifesimulation.Game.Map;
+import com.example.lifesimulation.Game.Nature.Plant;
 import com.example.lifesimulation.Game.Tiles.Desert;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +16,8 @@ import java.util.List;
 import java.util.Vector;
 
 public abstract class Human extends Animal {
+    protected Human parentOne;
+    protected Human parentTwo;
     protected House house;
     protected IAge age;
     protected Integer growingTime;
@@ -30,12 +35,20 @@ public abstract class Human extends Animal {
         suitableTile = new Vector<>(List.of(Desert.class));
         house = null;
         changeAge(age);
-        reproductionTime = 15;
-        reproductionCooldown = 15;
-        growingTime = 10;
+        reproductionTime = 10;
+        reproductionCooldown = 10;
+        growingTime = 30;
         hunger = 150;
+        foodSearchThreshold = 100;
         inventorySpace = 0;
         inventory = new Vector<>();
+        eatableEntities = new Vector<>(List.of(Predator.class, Herbivore.class, Plant.class));
+    }
+
+    public Human(IAge age, Human parentOne, Human parentTwo){
+        this(age);
+        this.parentOne = parentOne;
+        this.parentTwo = parentTwo;
     }
 
     @Override
@@ -43,7 +56,7 @@ public abstract class Human extends Animal {
         if (isDead) {
             return;
         }
-        hunger--;
+        hungerTick();
         if (hunger <= 0) {
             isDead = true;
             return;
@@ -106,4 +119,11 @@ public abstract class Human extends Animal {
         return inventory.size();
     }
 
+    public Human getParentOne() {
+        return parentOne;
+    }
+
+    public Human getParentTwo() {
+        return parentTwo;
+    }
 }

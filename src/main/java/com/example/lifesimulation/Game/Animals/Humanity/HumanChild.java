@@ -2,13 +2,34 @@ package com.example.lifesimulation.Game.Animals.Humanity;
 
 import com.example.lifesimulation.Game.EntityControlService;
 import com.example.lifesimulation.Game.Map;
+import org.jetbrains.annotations.NotNull;
 
 public class HumanChild implements IAge {
     public final Class AgeType = HumanChild.class;
 
     @Override
-    public void humanEat(Human human, EntityControlService entityControlService) {
-        //Specific logic of eating process
+    public void humanEat(@NotNull Human human, EntityControlService entityControlService) {
+        if (human.getHunger() < human.getFoodSearchThreshold()) {
+            //Set parent as target
+            if (human.getParentOne().getInventoryCount() != 0) {
+                human.setTarget(human.getParentOne());
+            } else {
+                human.setTarget(human.getParentTwo());
+            }
+
+            var distanceToParentOne = Math.sqrt(Math.pow(human.getX() - human.getParentOne().getX(), 2)
+                    + Math.pow(human.getY() - human.getParentOne().getY(), 2));
+            if (distanceToParentOne < 2) {
+                human.getParentOne().feedFromInventory(human);
+            }
+
+            var distanceToParentTwo = Math.sqrt(Math.pow(human.getX() - human.getParentTwo().getX(), 2)
+                    + Math.pow(human.getY() - human.getParentTwo().getY(), 2));
+            if (distanceToParentTwo < 2) {
+                human.getParentTwo().feedFromInventory(human);
+            }
+        }
+        human.hungerTick();
     }
 
     @Override
