@@ -35,8 +35,8 @@ public abstract class Human extends Animal {
         suitableTile = new Vector<>(List.of(Desert.class));
         house = null;
         changeAge(age);
-        reproductionTime = 10;
-        reproductionCooldown = 10;
+        reproductionTime = 30;
+        reproductionCooldown = 30;
         growingTime = 30;
         hunger = 150;
         foodSearchThreshold = 100;
@@ -70,7 +70,11 @@ public abstract class Human extends Animal {
         if (job != null) {
             job.work(this, entityControlService, map);
         }
-        moveToRandomDirection(map);
+        if (target != null) {
+            moveToTarget(map);
+        } else {
+            moveToRandomDirection(map);
+        }
         age.humanEat(this, entityControlService);
         age.humanReproduction(this, entityControlService);
         age.liveSpecificLife(this, map, entityControlService);

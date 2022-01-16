@@ -61,6 +61,9 @@ public class HumanAdult implements IAge {
             return;
         }
         if (human.getTarget() == null) {
+            if (((Human)findEntity).getHumanAge().getClass() == HumanChild.class) {
+                return;
+            }
             human.setTarget(findEntity);
         }
         var distance = Math.sqrt(Math.pow(human.getX() - findEntity.getX(), 2) + Math.pow(human.getY() - findEntity.getY(), 2));
