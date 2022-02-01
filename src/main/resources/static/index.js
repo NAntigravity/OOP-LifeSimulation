@@ -1,15 +1,15 @@
 function switchImageByID(tile, ID) {
     switch (ID) {
-        case "com.example.lifesimulation.Game.Tiles.Desert":
+        case "OOP.HITs.lifesimulation.Game.Tiles.Desert":
             tile.setAttribute('src', 'img/tiles/desert.jpg');
             break;
-        case "com.example.lifesimulation.Game.Tiles.Water":
+        case "OOP.HITs.lifesimulation.Game.Tiles.Water":
             tile.setAttribute('src', 'img/tiles/water.png');
             break;
-        case "com.example.lifesimulation.Game.Tiles.Snow":
+        case "OOP.HITs.lifesimulation.Game.Tiles.Snow":
             tile.setAttribute('src', 'img/tiles/snow.jpg');
             break;
-        case "com.example.lifesimulation.Game.Tiles.Ice":
+        case "OOP.HITs.lifesimulation.Game.Tiles.Ice":
             tile.setAttribute('src', 'img/tiles/ice.png');
             break;
     }
@@ -52,11 +52,11 @@ function switchHumanByAge(creation, entity) {
     let AGE = entity.humanAge.AgeType;
 
     switch (AGE) {
-        case "com.example.lifesimulation.Game.Animals.Humanity.HumanChild":
+        case "OOP.HITs.lifesimulation.Game.Animals.Humanity.HumanChild":
             creation.setAttribute('src', 'img/animals/child.png')
             break;
-        case "com.example.lifesimulation.Game.Animals.Humanity.HumanAdult":
-            if (ID === "com.example.lifesimulation.Game.Animals.Humanity.HumanMale") {
+        case "OOP.HITs.lifesimulation.Game.Animals.Humanity.HumanAdult":
+            if (ID === "OOP.HITs.lifesimulation.Game.Animals.Humanity.HumanMale") {
                 creation.setAttribute('src', 'img/animals/human.jpg')
                 break;
             } else {
@@ -69,29 +69,29 @@ function switchHumanByAge(creation, entity) {
 function switchEntityByID(creation, entity) {
     let ID = entity.entityType;
     switch (ID) {
-        case "com.example.lifesimulation.Game.Animals.Turtle":
+        case "OOP.HITs.lifesimulation.Game.Animals.Turtle":
             creation.setAttribute('src', 'img/animals/turtle.png');
             break;
-        case "com.example.lifesimulation.Game.Buildings.House":
+        case "OOP.HITs.lifesimulation.Game.Buildings.House":
             creation.setAttribute('src', 'img/buildings/house.png');
             break;
-        case "com.example.lifesimulation.Game.Animals.Humanity.HumanMale":
-        case "com.example.lifesimulation.Game.Animals.Humanity.HumanFemale":
+        case "OOP.HITs.lifesimulation.Game.Animals.Humanity.HumanMale":
+        case "OOP.HITs.lifesimulation.Game.Animals.Humanity.HumanFemale":
             switchHumanByAge(creation, entity);
             break;
-        case "com.example.lifesimulation.Game.Animals.Wolf":
+        case "OOP.HITs.lifesimulation.Game.Animals.Wolf":
             creation.setAttribute('src', 'img/animals/wolf.jpg');
             break;
-        case "com.example.lifesimulation.Game.Animals.Ship":
+        case "OOP.HITs.lifesimulation.Game.Animals.Ship":
             creation.setAttribute('src', 'img/animals/ship.png');
             break;
-        case "com.example.lifesimulation.Game.Animals.Pufferfish":
+        case "OOP.HITs.lifesimulation.Game.Animals.Pufferfish":
             creation.setAttribute('src', 'img/animals/pufferfish.png');
             break;
-        case "com.example.lifesimulation.Game.Nature.Grass":
+        case "OOP.HITs.lifesimulation.Game.Nature.Grass":
             creation.setAttribute('src', 'img/plants/grass.png');
             break;
-        case "com.example.lifesimulation.Game.Nature.WaterLily":
+        case "OOP.HITs.lifesimulation.Game.Nature.WaterLily":
             creation.setAttribute('src', 'img/plants/waterLily.png');
             break;
     }
